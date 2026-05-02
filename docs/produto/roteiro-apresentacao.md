@@ -12,7 +12,7 @@
 8. Demonstração do frontend estático.
 9. Demonstração do Docker.
 10. Como a IA ajudou na construção.
-11. Importância do `PROMPTS.md`.
+11. Importância do `prompts\PROMPTS.md`.
 12. Aprendizados.
 13. Próximos passos.
 14. Encerramento.
@@ -37,7 +37,7 @@ No frontend estático, a interface permite cadastrar, editar, excluir, analisar 
 
 Também demonstro a execução com Docker Compose, subindo a API em `localhost:8000` e o frontend em `localhost:8080`.
 
-Um ponto importante é que a IA também participou da construção do sistema. Para tornar esse processo auditável, o projeto mantém um arquivo `PROMPTS.md` com a sequência de prompts usada na construção.
+Um ponto importante é que a IA também participou da construção do sistema. Para tornar esse processo auditável, o projeto mantém um arquivo `prompts\PROMPTS.md` com a sequência de prompts usada na construção.
 
 Como aprendizado, o projeto mostra que é possível combinar engenharia de software, IA aplicada e documentação clara em um MVP enxuto e didático.
 
