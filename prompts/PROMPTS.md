@@ -1026,6 +1026,70 @@ git add .
 git commit -m "docs: atualiza documentacao final e roteiro de apresentacao"
 ```
 
+## Padrão de commits por camada
+
+Use este guia sempre que precisar gerar um commit de acordo com a camada alterada no projeto.
+
+### Regra geral
+
+- gerar commits pequenos e coerentes com uma única intenção;
+- usar prefixo semântico no início da mensagem;
+- citar a camada, módulo ou objetivo principal da mudança;
+- evitar misturar `docs`, `test`, `feat`, `refactor` e `chore` no mesmo commit, salvo quando a alteração for inseparável.
+
+### Prefixos recomendados
+
+- `feat`: nova funcionalidade ou evolução funcional;
+- `fix`: correção de bug;
+- `refactor`: melhoria estrutural sem mudar comportamento esperado;
+- `docs`: atualização de documentação;
+- `test`: criação ou melhoria de testes;
+- `chore`: ajustes operacionais, setup, Docker, scripts ou manutenção.
+
+### Convenção por camada
+
+| Camada / Área | Prefixo mais comum | Exemplo de mensagem |
+| --- | --- | --- |
+| `domain` | `feat` / `refactor` | `feat: adiciona entidade e regras de dominio de prompts` |
+| `application` | `feat` / `refactor` | `refactor: reorganiza use cases e contratos da camada application` |
+| `infrastructure` | `feat` / `fix` / `refactor` | `feat: adiciona persistencia sqlite e repository` |
+| `api` | `feat` / `fix` | `feat: adiciona rotas da api de prompts` |
+| `frontend` | `feat` / `fix` | `feat: adiciona frontend estatico para consumo da api` |
+| `tests` | `test` | `test: amplia cobertura de erros da api de prompts` |
+| `docs` | `docs` | `docs: atualiza arquitetura, testes e readme` |
+| `docker` / setup | `chore` | `chore: ajusta docker compose e configuracao local` |
+
+### Como decidir a mensagem
+
+1. Identifique a camada principal alterada.
+2. Identifique a natureza da mudança: nova funcionalidade, correção, refatoração, documentação, teste ou manutenção.
+3. Gere a mensagem no formato:
+
+```text
+<prefixo>: <acao principal> <camada/modulo/objetivo>
+```
+
+### Exemplos prontos
+
+```bash
+git commit -m "feat: adiciona regras de dominio para prompts"
+git commit -m "refactor: desacopla application da infrastructure"
+git commit -m "fix: corrige retorno de erro nas rotas da api"
+git commit -m "test: amplia cobertura dos fluxos de analise e prioridade"
+git commit -m "docs: atualiza readme e documentacao de arquitetura"
+git commit -m "chore: ajusta execucao local com docker compose"
+```
+
+### Instrução para uso com IA
+
+Ao pedir geração de commit, use a orientação:
+
+```text
+Gere o commit seguindo a padronização do projeto, considerando a camada principal alterada e o tipo da mudança.
+```
+
+Se houver alterações em mais de uma camada, priorize a camada dominante da mudança. Se documentação ou testes forem alterados junto com código apenas como suporte, mantenha o prefixo da mudança principal. Se a alteração for exclusivamente documentação ou testes, use `docs` ou `test`.
+
 ---
 
 # 25 — Prompt para Geração Completa do Projeto em Uma Única Execução
