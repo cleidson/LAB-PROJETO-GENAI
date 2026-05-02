@@ -54,10 +54,12 @@ O projeto está dividido nas camadas:
 │       └── repositories
 │           └── prompt_repository.py
 ├── docs
-│   ├── arquitetura.md
-│   ├── backlog.md
-│   ├── escopo-mvp.md
-│   └── roteiro-apresentacao.md
+│   ├── arquitetura
+│   │   └── arquitetura.md
+│   └── produto
+│       ├── backlog.md
+│       ├── escopo-mvp.md
+│       └── roteiro-apresentacao.md
 ├── frontend
 │   ├── app.js
 │   ├── index.html
