@@ -33,9 +33,14 @@ O projeto está dividido nas camadas:
 ├── app
 │   ├── api
 │   │   ├── main.py
+│   │   ├── dependencies.py
 │   │   └── routes
 │   │       └── prompt_routes.py
 │   ├── application
+│   │   ├── contracts
+│   │   │   └── prompt_repository.py
+│   │   ├── dto
+│   │   │   └── prompt_results.py
 │   │   ├── schemas
 │   │   │   └── prompt_schema.py
 │   │   ├── services
@@ -51,6 +56,8 @@ O projeto está dividido nas camadas:
 │   │       └── prompt_status.py
 │   └── infrastructure
 │       ├── database.py
+│       ├── models
+│       │   └── prompt_model.py
 │       └── repositories
 │           └── prompt_repository.py
 ├── docs
@@ -208,7 +215,9 @@ pytest
 ## Decisões técnicas
 
 - Persistência simples em SQLite para facilitar demonstração local.
-- `PromptTemplate` modelado com SQLModel para manter baixo acoplamento e reduzir código repetido.
+- `PromptTemplate` modelado como entidade de dominio pura para reduzir acoplamento com persistencia.
+- `PromptTemplate` mantido como entidade de dominio pura, separado do modelo ORM `PromptModel`.
+- A camada `application` depende de uma porta de repositorio, e a implementacao concreta fica em `infrastructure`.
 - Frontend sem framework para simplificar a apresentação.
 - Análise de prompts sem dependência de APIs externas.
 

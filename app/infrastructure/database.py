@@ -27,6 +27,6 @@ def get_session() -> Generator[Session, None, None]:
 
 
 def create_db_and_tables() -> None:
-    from app.domain.entities.prompt_template import PromptTemplate  # noqa: F401
+    from app.infrastructure.models.prompt_model import PromptModel  # noqa: F401
 
     SQLModel.metadata.create_all(get_engine())

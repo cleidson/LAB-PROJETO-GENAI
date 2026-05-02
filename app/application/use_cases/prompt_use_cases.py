@@ -1,6 +1,6 @@
+from app.application.contracts.prompt_repository import PromptRepositoryPort
 from app.application.schemas.prompt_schema import PromptCreateRequest, PromptUpdateRequest
 from app.domain.entities.prompt_template import PromptTemplate, utcnow
-from app.infrastructure.repositories.prompt_repository import PromptRepository
 
 
 class PromptNotFoundError(Exception):
@@ -12,7 +12,7 @@ class PromptValidationError(Exception):
 
 
 class PromptUseCases:
-    def __init__(self, repository: PromptRepository) -> None:
+    def __init__(self, repository: PromptRepositoryPort) -> None:
         self.repository = repository
 
     def create_prompt(self, payload: PromptCreateRequest) -> PromptTemplate:

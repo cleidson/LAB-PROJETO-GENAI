@@ -1,9 +1,5 @@
-from app.application.schemas.prompt_schema import (
-    AnalyzePromptResponse,
-    PriorityAdvisorResponse,
-    PromptCreateRequest,
-    PromptUpdateRequest,
-)
+from app.application.dto.prompt_results import PromptAnalysisResult, PromptPriorityResult
+from app.application.schemas.prompt_schema import PromptCreateRequest, PromptUpdateRequest
 from app.application.services.priority_advisor import PriorityAdvisor
 from app.application.services.prompt_analyzer import PromptAnalyzer
 from app.application.use_cases.prompt_use_cases import PromptUseCases
@@ -36,16 +32,16 @@ class PromptService:
     def delete_prompt(self, prompt_id: str) -> None:
         self.use_cases.delete_prompt(prompt_id)
 
-    def analyze_prompt(self, prompt_id: str) -> AnalyzePromptResponse:
+    def analyze_prompt(self, prompt_id: str) -> PromptAnalysisResult:
         prompt = self.use_cases.get_prompt(prompt_id)
         analysis = self.analyzer.analyze(prompt)
-        return AnalyzePromptResponse(
+        return PromptAnalysisResult(
             score=analysis["score"],
             classification=analysis["classification"],
             suggestions=analysis["suggestions"],
         )
 
-    def calculate_priority(self, prompt_id: str) -> PriorityAdvisorResponse:
+    def calculate_priority(self, prompt_id: str) -> PromptPriorityResult:
         prompt = self.use_cases.get_prompt(prompt_id)
         analysis = self.analyzer.analyze(prompt)
         priority = self.priority_advisor.advise(
@@ -55,4 +51,4 @@ class PromptService:
             has_suggestions=bool(analysis["suggestions"]),
             suggestions_count=len(analysis["suggestions"]),
         )
-        return PriorityAdvisorResponse(**priority)
+        return PromptPriorityResult(**priority)

@@ -1,5 +1,6 @@
+from dataclasses import asdict
+
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlmodel import Session
 
 from app.application.schemas.prompt_schema import (
     AnalyzePromptResponse,
@@ -9,29 +10,19 @@ from app.application.schemas.prompt_schema import (
     PromptResponse,
     PromptUpdateRequest,
 )
-from app.application.services.priority_advisor import PriorityAdvisor
-from app.application.services.prompt_analyzer import PromptAnalyzer
+from app.api.dependencies import get_prompt_service
 from app.application.services.prompt_service import PromptService
-from app.application.use_cases.prompt_use_cases import PromptNotFoundError, PromptUseCases, PromptValidationError
-from app.infrastructure.database import get_session
-from app.infrastructure.repositories.prompt_repository import PromptRepository
+from app.application.use_cases.prompt_use_cases import PromptNotFoundError, PromptValidationError
+from app.domain.entities.prompt_template import PromptTemplate
 
 router = APIRouter(prefix="/api/prompts", tags=["prompts"])
 
 
-def _to_prompt_response(prompt) -> PromptResponse:
-    data = prompt.model_dump()
+def _to_prompt_response(prompt: PromptTemplate) -> PromptResponse:
+    data = asdict(prompt)
     data["created_at"] = prompt.created_at.isoformat()
     data["updated_at"] = prompt.updated_at.isoformat()
     return PromptResponse(**data)
-
-
-def get_prompt_service(session: Session = Depends(get_session)) -> PromptService:
-    repository = PromptRepository(session)
-    use_cases = PromptUseCases(repository)
-    analyzer = PromptAnalyzer()
-    priority_advisor = PriorityAdvisor()
-    return PromptService(use_cases, analyzer, priority_advisor)
 
 
 @router.post("", response_model=PromptResponse, status_code=status.HTTP_201_CREATED)
@@ -82,7 +73,7 @@ def delete_prompt(prompt_id: str, service: PromptService = Depends(get_prompt_se
 @router.post("/{prompt_id}/analyze", response_model=AnalyzePromptResponse)
 def analyze_prompt(prompt_id: str, service: PromptService = Depends(get_prompt_service)) -> AnalyzePromptResponse:
     try:
-        return service.analyze_prompt(prompt_id)
+        return AnalyzePromptResponse(**asdict(service.analyze_prompt(prompt_id)))
     except PromptNotFoundError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
 
@@ -93,6 +84,6 @@ def calculate_priority(
     service: PromptService = Depends(get_prompt_service),
 ) -> PriorityAdvisorResponse:
     try:
-        return service.calculate_priority(prompt_id)
+        return PriorityAdvisorResponse(**asdict(service.calculate_priority(prompt_id)))
     except PromptNotFoundError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc

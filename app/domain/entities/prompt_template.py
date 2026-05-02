@@ -1,8 +1,6 @@
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from uuid import uuid4
-
-from sqlalchemy import JSON, Column
-from sqlmodel import Field, SQLModel
 
 from app.domain.enums.prompt_status import PromptStatus
 
@@ -11,16 +9,17 @@ def utcnow() -> datetime:
     return datetime.now(timezone.utc)
 
 
-class PromptTemplate(SQLModel, table=True):
-    id: str = Field(default_factory=lambda: str(uuid4()), primary_key=True)
+@dataclass(slots=True)
+class PromptTemplate:
     title: str
+    instructions: str
+    expected_output: str
     description: str | None = None
     persona: str | None = None
     context: str | None = None
-    instructions: str
-    expected_output: str
-    tags: list[str] = Field(default_factory=list, sa_column=Column(JSON, nullable=False))
-    status: PromptStatus = Field(default=PromptStatus.DRAFT)
-    version: int = Field(default=1, nullable=False)
-    created_at: datetime = Field(default_factory=utcnow, nullable=False)
-    updated_at: datetime = Field(default_factory=utcnow, nullable=False)
+    tags: list[str] = field(default_factory=list)
+    status: PromptStatus = PromptStatus.DRAFT
+    id: str = field(default_factory=lambda: str(uuid4()))
+    version: int = 1
+    created_at: datetime = field(default_factory=utcnow)
+    updated_at: datetime = field(default_factory=utcnow)

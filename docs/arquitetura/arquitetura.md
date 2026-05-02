@@ -12,15 +12,15 @@ Clean Architecture ajuda a isolar regras de negócio de detalhes de framework, b
 
 ### `domain`
 
-Define a entidade `PromptTemplate` e o enum `PromptStatus`, concentrando o núcleo do modelo.
+Define a entidade pura `PromptTemplate` e o enum `PromptStatus`, concentrando o núcleo do modelo sem dependência de ORM.
 
 ### `application`
 
-Agrupa schemas, casos de uso e serviços responsáveis por validação, orquestração, análise local e cálculo de prioridade.
+Agrupa contratos, DTOs, schemas de entrada, casos de uso e serviços responsáveis por validação, orquestração, análise local e cálculo de prioridade.
 
 ### `infrastructure`
 
-Concentra a configuração do banco SQLite e o repositório de persistência.
+Concentra a configuração do banco SQLite, o modelo ORM `PromptModel` e o repositório concreto de persistência.
 
 ### `api`
 
@@ -31,6 +31,8 @@ Expõe a aplicação via FastAPI, com rotas HTTP, status codes e integração co
 Interface web estática para consumir a API e demonstrar os fluxos do sistema.
 
 ## Diagrama Mermaid de componentes
+
+O diagrama principal da implementacao foi separado em `docs\arquitetura\diagramas\arquitetura-sistema.md`.
 
 ```mermaid
 flowchart LR
@@ -51,8 +53,8 @@ flowchart LR
 1. O frontend envia um `POST /api/prompts`.
 2. A rota valida o payload com `PromptCreateRequest`.
 3. `PromptService` delega a criação para `PromptUseCases`.
-4. `PromptUseCases` instancia `PromptTemplate`.
-5. `PromptRepository` persiste o registro no SQLite.
+4. `PromptUseCases` instancia a entidade de domínio `PromptTemplate`.
+5. `PromptRepository` converte a entidade para `PromptModel` e persiste o registro no SQLite.
 6. A API retorna `PromptResponse`.
 
 ## Fluxo de análise de prompt
@@ -71,13 +73,13 @@ flowchart LR
 
 ## Limitações da arquitetura no MVP
 
-- Entidade e persistência foram simplificadas com SQLModel para reduzir complexidade.
-- Não há camada separada para interfaces abstratas de repositório.
+- A persistência continua simplificada com SQLModel, mas a entidade de domínio foi separada para reduzir acoplamento.
 - O frontend estático consome a API diretamente, sem camada de BFF.
+- A composição de dependências ainda é simples e manual, apesar de centralizada em `api/dependencies.py`.
 
 ## Possíveis evoluções
 
-- Introduzir portas e adaptadores explícitos.
+- Evoluir as portas atuais para um conjunto mais amplo de adaptadores explícitos.
 - Migrar a persistência para PostgreSQL.
 - Adicionar autenticação e observabilidade.
 - Criar histórico versionado de prompts e dashboards analíticos.
