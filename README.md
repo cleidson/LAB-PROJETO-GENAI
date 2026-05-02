@@ -455,17 +455,19 @@ As principais decisões técnicas do projeto foram:
 
 ---
 
-## 20. Storytelling de IA: como a Inteligência Artificial apoiou o desenvolvimento
+## 20. Como a IA Acelerou Este Projeto
 
 O **PromptHub AI Python** nasceu a partir de uma proposta simples: criar um CRUD acadêmico para demonstrar os conhecimentos adquiridos na pós-graduação em Engenharia de IA. Porém, em vez de desenvolver um cadastro genérico, como produtos, clientes ou tarefas, a decisão foi transformar o próprio objeto de estudo da disciplina em domínio do sistema: **prompts de Inteligência Artificial**.
 
 A partir dessa escolha, o projeto passou a ter uma narrativa mais conectada ao contexto da pós-graduação. O sistema não apenas cadastra informações; ele organiza, versiona, analisa e prioriza prompts, demonstrando na prática como a Engenharia de IA pode ser aplicada ao desenvolvimento de software.
 
-Durante a construção, assistentes de IA foram utilizados como apoio para acelerar etapas importantes do projeto, como definição do escopo, estruturação da arquitetura, criação dos prompts de desenvolvimento, organização do README, geração de ideias para testes e refinamento da documentação técnica. Esse apoio permitiu evoluir rapidamente de uma ideia inicial para um projeto mais estruturado, com separação de responsabilidades, documentação e execução local via Docker.
+Durante a construção, utilizei o **GitHub Copilot CLI**, powered by **GPT-5.4** (model ID: `gpt-5.4`), como agente de IA para acelerar etapas importantes do projeto, como definição do escopo, estruturação da arquitetura, criação e refino de arquivos, organização do README, geração de ideias para testes, elaboração de diagramas e consolidação da documentação técnica. Esse apoio permitiu evoluir rapidamente de uma ideia inicial para um projeto mais estruturado, com separação de responsabilidades, documentação e execução local via Docker.
 
-Na pratica, a IA foi usada em praticamente todas as fases do projeto: concepcao do escopo, definicao da arquitetura, organizacao das pastas, geracao e refino dos contratos, escrita dos testes, elaboracao dos diagramas, revisao do README, consolidacao da documentacao e ajuste incremental da qualidade tecnica.
+Na pratica, a IA foi usada em praticamente todas as fases do projeto: concepcao do escopo, definicao da arquitetura, organizacao das pastas, geracao e refino dos contratos, escrita e ampliacao dos testes, elaboracao dos diagramas, revisao do README, consolidacao da documentacao e ajuste incremental da qualidade tecnica.
 
-Um dos principais aprendizados foi que a IA não substitui o raciocínio técnico do desenvolvedor. Ela atua como uma parceira de produtividade, ajudando a organizar ideias, sugerir caminhos e reduzir o tempo gasto em tarefas repetitivas. As decisões mais importantes, como adotar Clean Architecture, separar a entidade de domínio do modelo de persistência, manter a análise de prompts local e evitar dependência de APIs externas no MVP, foram avaliadas e ajustadas de acordo com o objetivo acadêmico do projeto.
+Os principais ganhos de produtividade vieram da capacidade de acelerar tarefas repetitivas e de alto volume de contexto, como revisão de estrutura, atualização de documentação, refatorações coordenadas entre múltiplos arquivos, expansão da suíte de testes e padronização dos commits. Isso tornou o fluxo de desenvolvimento mais rápido e mais consistente.
+
+Ao mesmo tempo, a **revisao humana continuou essencial**. A IA nao substituiu o raciocinio tecnico nem a tomada de decisao arquitetural. As definicoes mais importantes, como adotar Clean Architecture, separar a entidade de dominio do modelo de persistencia, manter a analise de prompts local e evitar dependencia de APIs externas no MVP, foram revisadas e validadas manualmente conforme o objetivo academico do projeto.
 
 A criação do arquivo `prompts\PROMPTS.md` foi uma parte essencial dessa abordagem. Ele registra a sequência de prompts utilizados durante o desenvolvimento, funcionando como uma trilha de auditoria da construção assistida por IA. Dessa forma, o projeto não mostra apenas o resultado final, mas também o processo de criação, experimentação e refinamento.
 
@@ -473,7 +475,7 @@ Outro ponto importante foi a escolha de implementar dois serviços relacionados 
 
 Com isso, o **PromptHub AI Python** deixa de ser apenas um CRUD e passa a representar um pequeno laboratório de Engenharia de IA aplicada. Ele demonstra como prompts podem ser tratados como ativos importantes de um projeto, exigindo organização, avaliação, melhoria contínua e rastreabilidade.
 
-Em resumo, a IA foi utilizada neste projeto como uma ferramenta de apoio à engenharia de software, contribuindo para acelerar a criação, melhorar a documentação e fortalecer a narrativa técnica da entrega. O resultado é um MVP simples, porém alinhado com os conceitos de arquitetura, automação, documentação e uso consciente de Inteligência Artificial.
+Em resumo, a IA foi utilizada neste projeto como uma ferramenta de apoio à engenharia de software, contribuindo para acelerar a criação, melhorar a documentação, reforçar os testes e fortalecer a narrativa técnica da entrega. O resultado é um MVP simples, porém alinhado com os conceitos de arquitetura, automação, documentação e uso consciente de Inteligência Artificial.
 
 ---
 
