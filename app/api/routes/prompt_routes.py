@@ -19,6 +19,7 @@ router = APIRouter(prefix="/api/prompts", tags=["prompts"])
 
 
 def _to_prompt_response(prompt: PromptTemplate) -> PromptResponse:
+    """Mapeia a entidade de dominio para o contrato HTTP de resposta."""
     data = asdict(prompt)
     data["created_at"] = prompt.created_at.isoformat()
     data["updated_at"] = prompt.updated_at.isoformat()
@@ -27,6 +28,7 @@ def _to_prompt_response(prompt: PromptTemplate) -> PromptResponse:
 
 @router.post("", response_model=PromptResponse, status_code=status.HTTP_201_CREATED)
 def create_prompt(payload: PromptCreateRequest, service: PromptService = Depends(get_prompt_service)) -> PromptResponse:
+    """Cria um novo prompt e retorna sua representacao completa."""
     try:
         prompt = service.create_prompt(payload)
         return _to_prompt_response(prompt)
@@ -36,11 +38,13 @@ def create_prompt(payload: PromptCreateRequest, service: PromptService = Depends
 
 @router.get("", response_model=list[PromptResponse])
 def list_prompts(service: PromptService = Depends(get_prompt_service)) -> list[PromptResponse]:
+    """Lista os prompts cadastrados em ordem de criacao mais recente."""
     return [_to_prompt_response(prompt) for prompt in service.list_prompts()]
 
 
 @router.get("/{prompt_id}", response_model=PromptResponse)
 def get_prompt(prompt_id: str, service: PromptService = Depends(get_prompt_service)) -> PromptResponse:
+    """Consulta um prompt existente pelo identificador."""
     try:
         return _to_prompt_response(service.get_prompt(prompt_id))
     except PromptNotFoundError as exc:
@@ -53,6 +57,7 @@ def update_prompt(
     payload: PromptUpdateRequest,
     service: PromptService = Depends(get_prompt_service),
 ) -> PromptResponse:
+    """Atualiza um prompt existente usando payload parcial."""
     try:
         return _to_prompt_response(service.update_prompt(prompt_id, payload))
     except PromptNotFoundError as exc:
@@ -63,6 +68,7 @@ def update_prompt(
 
 @router.delete("/{prompt_id}", response_model=ApiResponse)
 def delete_prompt(prompt_id: str, service: PromptService = Depends(get_prompt_service)) -> ApiResponse:
+    """Remove um prompt existente."""
     try:
         service.delete_prompt(prompt_id)
         return ApiResponse(success=True, message="Prompt removido com sucesso.")
@@ -72,6 +78,7 @@ def delete_prompt(prompt_id: str, service: PromptService = Depends(get_prompt_se
 
 @router.post("/{prompt_id}/analyze", response_model=AnalyzePromptResponse)
 def analyze_prompt(prompt_id: str, service: PromptService = Depends(get_prompt_service)) -> AnalyzePromptResponse:
+    """Executa a analise local de qualidade de um prompt."""
     try:
         return AnalyzePromptResponse(**asdict(service.analyze_prompt(prompt_id)))
     except PromptNotFoundError as exc:
@@ -83,6 +90,7 @@ def calculate_priority(
     prompt_id: str,
     service: PromptService = Depends(get_prompt_service),
 ) -> PriorityAdvisorResponse:
+    """Calcula a prioridade de melhoria ou uso de um prompt."""
     try:
         return PriorityAdvisorResponse(**asdict(service.calculate_priority(prompt_id)))
     except PromptNotFoundError as exc:

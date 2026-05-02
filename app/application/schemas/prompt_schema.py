@@ -12,6 +12,8 @@ def _normalize_tags(tags: list[str] | None) -> list[str]:
 
 
 class PromptCreateRequest(BaseModel):
+    """Contrato de entrada para criacao de prompts."""
+
     title: str = Field(min_length=1, description="Titulo do prompt")
     description: str | None = None
     persona: str | None = None
@@ -44,6 +46,8 @@ class PromptCreateRequest(BaseModel):
 
 
 class PromptUpdateRequest(BaseModel):
+    """Contrato de entrada para atualizacao parcial de prompts."""
+
     title: str | None = None
     description: str | None = None
     persona: str | None = None
@@ -80,6 +84,8 @@ class PromptUpdateRequest(BaseModel):
 
 
 class PromptResponse(BaseModel):
+    """Contrato de saida para representacao completa de um prompt."""
+
     model_config = ConfigDict(from_attributes=True)
 
     id: str
@@ -97,18 +103,24 @@ class PromptResponse(BaseModel):
 
 
 class AnalyzePromptResponse(BaseModel):
+    """Contrato de saida do endpoint de analise."""
+
     score: int
     classification: str
     suggestions: list[str]
 
 
 class PriorityAdvisorResponse(BaseModel):
+    """Contrato de saida do endpoint de prioridade."""
+
     priority: str
     reason: str
     recommended_action: str
 
 
 class ApiResponse(BaseModel):
+    """Envelope simples para respostas operacionais da API."""
+
     success: bool
     message: str
     data: Any | None = None

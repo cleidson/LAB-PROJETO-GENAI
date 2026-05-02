@@ -9,6 +9,7 @@ from app.infrastructure.database import create_db_and_tables
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
+    """Inicializa recursos compartilhados da aplicacao durante o startup."""
     create_db_and_tables()
     yield
 
@@ -35,6 +36,7 @@ app.add_middleware(
 
 @app.get("/health")
 def health() -> dict[str, str]:
+    """Retorna o status minimo da aplicacao para smoke checks."""
     return {"status": "ok"}
 
 

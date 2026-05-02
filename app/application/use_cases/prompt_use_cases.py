@@ -4,20 +4,22 @@ from app.domain.entities.prompt_template import PromptTemplate, utcnow
 
 
 class PromptNotFoundError(Exception):
-    pass
+    """Erro de aplicacao para prompts inexistentes."""
 
 
 class PromptValidationError(Exception):
-    pass
+    """Erro de validacao para operacoes de prompt."""
 
 
 class PromptUseCases:
+    """Executa os fluxos de negocio do CRUD de prompts."""
+
     def __init__(self, repository: PromptRepositoryPort) -> None:
         self.repository = repository
 
     def create_prompt(self, payload: PromptCreateRequest) -> PromptTemplate:
         if not payload.title or not payload.instructions or not payload.expected_output:
-            raise PromptValidationError("Title, instructions e expected_output sao obrigatorios.")
+            raise PromptValidationError("Titulo, instrucoes e saida esperada sao obrigatorios.")
 
         prompt = PromptTemplate(
             title=payload.title,
@@ -45,7 +47,7 @@ class PromptUseCases:
         updates = payload.model_dump(exclude_unset=True)
 
         if not updates:
-            raise PromptValidationError("Informe ao menos um campo para atualizar.")
+            raise PromptValidationError("Informe ao menos um campo valido para atualizar o prompt.")
 
         for field_name, value in updates.items():
             setattr(prompt, field_name, value)

@@ -30,6 +30,19 @@ O objetivo do projeto é apresentar uma aplicação simples, funcional e bem est
 
 ---
 
+## 2.1. O que o projeto resolve
+
+O projeto resolve um problema comum em times que usam IA: prompts importantes acabam espalhados, sem padrao, sem versionamento, sem criterio de qualidade e sem clareza sobre o que precisa ser melhorado primeiro.
+
+Com isso, o PromptHub AI Python oferece:
+
+- centralizacao dos prompts em um CRUD simples;
+- avaliacao local da qualidade estrutural de cada prompt;
+- priorizacao objetiva para revisao ou reutilizacao;
+- rastreabilidade do processo de construcao assistida por IA.
+
+---
+
 ## 3. Funcionalidades
 
 - CRUD completo de prompts.
@@ -127,10 +140,13 @@ Essa separação permite que a regra de negócio fique menos dependente de detal
 │   │   ├── arquitetura.md
 │   │   └── diagramas
 │   │       └── arquitetura-sistema.md
-│   └── produto
-│       ├── backlog.md
-│       ├── escopo-mvp.md
-│       └── roteiro-apresentacao.md
+│   ├── produto
+│   │   ├── backlog.md
+│   │   ├── escopo-mvp.md
+│   │   └── roteiro-apresentacao.md
+│   └── tests
+│       ├── diagrama-testes.md
+│       └── resultado-testes.md
 ├── frontend
 │   ├── app.js
 │   ├── index.html
@@ -144,7 +160,6 @@ Essa separação permite que a regra de negócio fique menos dependente de detal
 ├── Dockerfile
 ├── docker-compose.yml
 ├── README.md
-├── READMEV2.MD
 ├── requests.http
 └── requirements.txt
 ```
@@ -271,6 +286,32 @@ docker compose down
 
 ---
 
+## 13.1. Guia rapido reprodutivel
+
+Para reproduzir o projeto localmente do zero:
+
+1. Clone o repositorio e entre na pasta do projeto.
+2. Crie o ambiente virtual com `python -m venv .venv`.
+3. Ative o ambiente com `.venv\Scripts\activate`.
+4. Instale as dependencias com `pip install -r requirements.txt`.
+5. Suba a API com `uvicorn app.api.main:app --reload`.
+6. Em outro terminal, suba o frontend com `python -m http.server 8080 --directory frontend`.
+7. Acesse a API em `http://localhost:8000`, o Swagger em `http://localhost:8000/docs` e o frontend em `http://localhost:8080`.
+8. Execute os testes com `pytest`.
+
+## 13.2. Documentacao complementar
+
+- Arquitetura: `docs\arquitetura\arquitetura.md`
+- Diagrama de arquitetura: `docs\arquitetura\diagramas\arquitetura-sistema.md`
+- Escopo do MVP: `docs\produto\escopo-mvp.md`
+- Backlog: `docs\produto\backlog.md`
+- Roteiro de apresentacao: `docs\produto\roteiro-apresentacao.md`
+- Relatorio de testes: `docs\tests\resultado-testes.md`
+- Diagrama de testes: `docs\tests\diagrama-testes.md`
+- Historico de prompts usados no desenvolvimento: `prompts\PROMPTS.md`
+
+---
+
 ## 14. Endpoints da API
 
 | Método | Endpoint | Descrição |
@@ -392,6 +433,8 @@ Os testes validam cenários como:
 - análise de qualidade;
 - cálculo de prioridade.
 
+Os contratos de entrada e saida da API ficam explicitos em `app\application\schemas\prompt_schema.py`, e os testes exercitam esses contratos via HTTP usando `TestClient`.
+
 ---
 
 ## 19. Decisões Técnicas
@@ -419,6 +462,8 @@ O **PromptHub AI Python** nasceu a partir de uma proposta simples: criar um CRUD
 A partir dessa escolha, o projeto passou a ter uma narrativa mais conectada ao contexto da pós-graduação. O sistema não apenas cadastra informações; ele organiza, versiona, analisa e prioriza prompts, demonstrando na prática como a Engenharia de IA pode ser aplicada ao desenvolvimento de software.
 
 Durante a construção, assistentes de IA foram utilizados como apoio para acelerar etapas importantes do projeto, como definição do escopo, estruturação da arquitetura, criação dos prompts de desenvolvimento, organização do README, geração de ideias para testes e refinamento da documentação técnica. Esse apoio permitiu evoluir rapidamente de uma ideia inicial para um projeto mais estruturado, com separação de responsabilidades, documentação e execução local via Docker.
+
+Na pratica, a IA foi usada em praticamente todas as fases do projeto: concepcao do escopo, definicao da arquitetura, organizacao das pastas, geracao e refino dos contratos, escrita dos testes, elaboracao dos diagramas, revisao do README, consolidacao da documentacao e ajuste incremental da qualidade tecnica.
 
 Um dos principais aprendizados foi que a IA não substitui o raciocínio técnico do desenvolvedor. Ela atua como uma parceira de produtividade, ajudando a organizar ideias, sugerir caminhos e reduzir o tempo gasto em tarefas repetitivas. As decisões mais importantes, como adotar Clean Architecture, separar a entidade de domínio do modelo de persistência, manter a análise de prompts local e evitar dependência de APIs externas no MVP, foram avaliadas e ajustadas de acordo com o objetivo acadêmico do projeto.
 

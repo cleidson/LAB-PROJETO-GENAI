@@ -2,6 +2,8 @@ from app.domain.enums.prompt_status import PromptStatus
 
 
 class PriorityAdvisor:
+    """Converte o resultado da analise em uma prioridade acionavel."""
+
     LEVELS = ["Low", "Medium", "High", "Critical"]
 
     def advise(
@@ -13,6 +15,7 @@ class PriorityAdvisor:
         has_suggestions: bool,
         suggestions_count: int,
     ) -> dict:
+        """Retorna prioridade, justificativa e acao recomendada."""
         if status == PromptStatus.ARCHIVED:
             return {
                 "priority": "Low",

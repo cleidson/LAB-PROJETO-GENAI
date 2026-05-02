@@ -7,6 +7,8 @@ from app.domain.entities.prompt_template import PromptTemplate
 
 
 class PromptService:
+    """Orquestra CRUD, analise e prioridade sem expor detalhes de infraestrutura."""
+
     def __init__(
         self,
         use_cases: PromptUseCases,
@@ -33,6 +35,7 @@ class PromptService:
         self.use_cases.delete_prompt(prompt_id)
 
     def analyze_prompt(self, prompt_id: str) -> PromptAnalysisResult:
+        """Retorna o resultado consolidado da analise estrutural do prompt."""
         prompt = self.use_cases.get_prompt(prompt_id)
         analysis = self.analyzer.analyze(prompt)
         return PromptAnalysisResult(
@@ -42,6 +45,7 @@ class PromptService:
         )
 
     def calculate_priority(self, prompt_id: str) -> PromptPriorityResult:
+        """Calcula a prioridade recomendada a partir da analise do prompt."""
         prompt = self.use_cases.get_prompt(prompt_id)
         analysis = self.analyzer.analyze(prompt)
         priority = self.priority_advisor.advise(

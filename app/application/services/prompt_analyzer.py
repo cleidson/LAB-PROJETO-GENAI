@@ -2,7 +2,10 @@ from app.domain.entities.prompt_template import PromptTemplate
 
 
 class PromptAnalyzer:
+    """Aplica uma heuristica local para avaliar a qualidade de um prompt."""
+
     def analyze(self, prompt: PromptTemplate) -> dict:
+        """Retorna score, classificacao, sugestoes e lacunas estruturais."""
         suggestions: list[str] = []
         score = 0
         missing_fields = 0

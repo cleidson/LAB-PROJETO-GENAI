@@ -124,3 +124,47 @@ def test_should_calculate_prompt_priority(client):
     payload = response.json()
     assert payload["priority"] in {"Low", "Medium", "High", "Critical"}
     assert "recommended_action" in payload
+
+
+def test_should_return_ok_on_health_endpoint(client):
+    response = client.get("/health")
+
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}
+
+
+def test_should_return_not_found_when_updating_missing_prompt(client):
+    response = client.put("/api/prompts/not-found", json={"description": "Nao existe"})
+
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Prompt nao encontrado."
+
+
+def test_should_return_bad_request_when_updating_without_fields(client):
+    created = client.post("/api/prompts", json=create_prompt_payload()).json()
+
+    response = client.put(f"/api/prompts/{created['id']}", json={})
+
+    assert response.status_code == 400
+    assert response.json()["detail"] == "Informe ao menos um campo valido para atualizar o prompt."
+
+
+def test_should_return_not_found_when_deleting_missing_prompt(client):
+    response = client.delete("/api/prompts/not-found")
+
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Prompt nao encontrado."
+
+
+def test_should_return_not_found_when_analyzing_missing_prompt(client):
+    response = client.post("/api/prompts/not-found/analyze")
+
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Prompt nao encontrado."
+
+
+def test_should_return_not_found_when_calculating_priority_for_missing_prompt(client):
+    response = client.post("/api/prompts/not-found/priority")
+
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Prompt nao encontrado."

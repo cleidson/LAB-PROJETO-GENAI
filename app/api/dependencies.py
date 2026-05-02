@@ -10,6 +10,7 @@ from app.infrastructure.repositories.prompt_repository import PromptRepository
 
 
 def get_prompt_service(session: Session = Depends(get_session)) -> PromptService:
+    """Centraliza a composicao do servico principal da API."""
     repository = PromptRepository(session)
     use_cases = PromptUseCases(repository)
     analyzer = PromptAnalyzer()
