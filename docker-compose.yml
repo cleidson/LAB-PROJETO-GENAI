@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      context: .
+    environment:
+      DATABASE_URL: sqlite:///./data/prompthub.db
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+
+  frontend:
+    image: nginx:alpine
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro

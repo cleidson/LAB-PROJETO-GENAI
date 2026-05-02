@@ -1,0 +1,44 @@
+@baseUrl = http://localhost:8000
+@promptId = replace-with-id
+
+### Health check
+GET {{baseUrl}}/health
+
+### Criar prompt
+POST {{baseUrl}}/api/prompts
+Content-Type: application/json
+
+{
+  "title": "Planejador de estudos em IA",
+  "description": "Prompt para criar uma rotina de estudos da pos-graduacao.",
+  "persona": "Mentor academico especialista em IA aplicada",
+  "context": "O aluno trabalha durante o dia e precisa estudar a noite.",
+  "instructions": "Crie um plano semanal de 4 semanas. Nao inclua teoria excessiva. Priorize pratica e revisao.",
+  "expected_output": "Tabela com semana, foco, atividades e criterio de sucesso.",
+  "tags": ["estudos", "planejamento", "ia"],
+  "status": "Active"
+}
+
+### Listar prompts
+GET {{baseUrl}}/api/prompts
+
+### Consultar prompt por ID
+GET {{baseUrl}}/api/prompts/{{promptId}}
+
+### Atualizar prompt
+PUT {{baseUrl}}/api/prompts/{{promptId}}
+Content-Type: application/json
+
+{
+  "description": "Prompt atualizado para melhorar clareza e saida.",
+  "tags": ["estudos", "planejamento", "ia", "mvp"]
+}
+
+### Analisar prompt
+POST {{baseUrl}}/api/prompts/{{promptId}}/analyze
+
+### Calcular prioridade
+POST {{baseUrl}}/api/prompts/{{promptId}}/priority
+
+### Excluir prompt
+DELETE {{baseUrl}}/api/prompts/{{promptId}}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptHub AI Python</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <section class="hero">
+            <h1>PromptHub AI Python</h1>
+            <p>Gerencie prompts de IA, avalie qualidade e priorize melhorias.</p>
+        </section>
+
+        <section class="panel">
+            <h2 id="form-title">Novo prompt</h2>
+            <form id="prompt-form">
+                <input type="hidden" id="prompt-id">
+                <div class="grid">
+                    <label>
+                        Titulo
+                        <input type="text" id="title" required>
+                    </label>
+                    <label>
+                        Status
+                        <select id="status">
+                            <option value="Draft">Draft</option>
+                            <option value="Active">Active</option>
+                            <option value="Archived">Archived</option>
+                        </select>
+                    </label>
+                </div>
+                <label>
+                    Descricao
+                    <textarea id="description" rows="2"></textarea>
+                </label>
+                <div class="grid">
+                    <label>
+                        Persona
+                        <textarea id="persona" rows="2"></textarea>
+                    </label>
+                    <label>
+                        Contexto
+                        <textarea id="context" rows="2"></textarea>
+                    </label>
+                </div>
+                <label>
+                    Instrucoes
+                    <textarea id="instructions" rows="4" required></textarea>
+                </label>
+                <label>
+                    Saida esperada
+                    <textarea id="expected_output" rows="3" required></textarea>
+                </label>
+                <label>
+                    Tags
+                    <input type="text" id="tags" placeholder="ex.: ia, planejamento, estudo">
+                </label>
+                <div class="actions">
+                    <button type="submit">Salvar prompt</button>
+                    <button type="button" class="secondary" id="cancel-edit">Cancelar edicao</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="panel">
+            <div class="section-header">
+                <h2>Prompts cadastrados</h2>
+                <button type="button" class="secondary" id="refresh-list">Atualizar lista</button>
+            </div>
+            <div id="feedback" class="feedback"></div>
+            <div id="prompt-list" class="prompt-list"></div>
+        </section>
+    </main>
+
+    <template id="prompt-card-template">
+        <article class="prompt-card">
+            <div class="card-header">
+                <div>
+                    <h3 class="prompt-title"></h3>
+                    <p class="prompt-meta"></p>
+                </div>
+                <span class="badge"></span>
+            </div>
+            <p class="prompt-description"></p>
+            <div class="tag-list"></div>
+            <div class="result-box"></div>
+            <div class="card-actions">
+                <button type="button" data-action="edit">Editar</button>
+                <button type="button" class="secondary" data-action="analyze">Analisar</button>
+                <button type="button" class="secondary" data-action="priority">Prioridade</button>
+                <button type="button" class="danger" data-action="delete">Excluir</button>
+            </div>
+        </article>
+    </template>
+
+    <script src="app.js"></script>
+</body>
+</html>
