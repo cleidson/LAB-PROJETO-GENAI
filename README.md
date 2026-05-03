@@ -306,6 +306,7 @@ Para reproduzir o projeto localmente do zero:
 - Escopo do MVP: `docs\produto\escopo-mvp.md`
 - Backlog: `docs\produto\backlog.md`
 - Roteiro de apresentacao: `docs\produto\roteiro-apresentacao.md`
+- Roteiro de demonstracao tecnica: `docs\produto\roteiro-demonstracao-tecnica.md`
 - Relatorio de testes: `docs\tests\resultado-testes.md`
 - Diagrama de testes: `docs\tests\diagrama-testes.md`
 - Historico de prompts usados no desenvolvimento: `prompts\PROMPTS.md`
