@@ -17,7 +17,7 @@ async def lifespan(_: FastAPI):
 app = FastAPI(
     title="PromptHub AI Python",
     description="API REST para cadastro, analise e priorizacao de prompts de IA.",
-    version="1.0.0",
+    version="1.0.1",
     lifespan=lifespan,
 )
 
